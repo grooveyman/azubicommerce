@@ -226,16 +226,6 @@
                 "operationId": "4166fd0418f4557cdaaf8dfcc29eb00d",
                 "parameters": [
                     {
-                        "name": "productid",
-                        "in": "query",
-                        "description": "Product ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    },
-                    {
                         "name": "quantity",
                         "in": "query",
                         "description": "Quantity of the product",

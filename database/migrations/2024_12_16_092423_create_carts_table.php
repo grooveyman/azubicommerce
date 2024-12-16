@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->integer('quantity'); //quantity of particualr item in cart
-            $table->enum('status', ['0','1'])->default('1')->comment('0=>inactive, 1=>active');
             $table->timestamps();
 
             

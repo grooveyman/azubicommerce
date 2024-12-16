@@ -233,7 +233,7 @@ class ProductController extends Controller
                 if ($images) {
                     return response()->json(["status" => 200, "results" => 'Product created successfully with respective images'], 200);
                 }
-                // return response()->json(["status" => 200, "results" =>'Produt created successfully'], 200);
+                return response()->json(["status" => 200, "results" => 'Produt created successfully'], 200);
 
             } else {
                 return MyErrorHandler::errorMsg(500);
@@ -246,26 +246,31 @@ class ProductController extends Controller
      */
 
     /** @OA\Get( 
-     * path="/products/{id}", 
-     * operationId="getProductById", 
-     * tags={"products"}, 
-     * summary="Get a product by its ID", 
-     * @OA\Parameter( 
-     * name="id", 
-     * in="path", 
-     * description="ID of the product to retrieve", 
-     * required=true, 
-     * @OA\Schema(type="integer") * ), 
-     * @OA\Response( * response=200, 
-     * description="Successful operation", 
-     * @OA\JsonContent( 
-     * @OA\Property(property="status", type="integer", example=200), 
-     * @OA\Property(property="results", type="object", example="successfully fetched") * )
-     * ), 
-     * @OA\Response( * response=404, * description="Product not found", 
-     * @OA\JsonContent( 
-     * @OA\Property(property="status", type="integer", example=404), 
-     * @OA\Property(property="message", type="string", example="Product not found") * ) * ) * ) */
+     *      path="/products/{id}", 
+     *      operationId="getProductById", 
+     *      tags={"products"}, 
+     *      summary="Get a product by its ID", 
+     *      @OA\Parameter( 
+     *          name="id", 
+     *          in="path", 
+     *          description="ID of the product to retrieve", 
+     *          required=true, 
+     *          @OA\Schema(type="integer") * ), 
+     *          @OA\Response( * response=200, 
+     *              description="Successful operation", 
+     *              @OA\JsonContent( 
+     *                  @OA\Property(property="status", type="integer", example=200), 
+     *                  @OA\Property(property="results", type="object", example="successfully fetched") * )
+     *              ), 
+     *          @OA\Response( * response=404, * description="Product not found", 
+     *              @OA\JsonContent( 
+     *                  @OA\Property(property="status", type="integer", example=404), 
+     *              @OA\Property(property="message", type="string", example="Product not found")
+     *              ) 
+     *           ) 
+     *       )
+     * 
+     *  */
 
     public function show(Product $product)
     {
@@ -287,23 +292,106 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-/** @OA\Put(path="/products/{id}", operationId="updateProduct", tags={"products"}, summary="Update an existing product", 
- * @OA\Parameter( name="id", in="path", description="ID of the product to update", required=true, @OA\Schema(type="integer") * ), * @OA\RequestBody( * required=true, * @OA\JsonContent( 
- * @OA\Property(property="name", type="string", example="Updated Product Name"), 
- * @OA\Property(property="price", type="number", format="float", example=39.99),
- *  @OA\Property(property="category", type="string", example="Updated Category Name"), 
- * @OA\Property(property="thumbnail", type="string", example="updated_thumbnail.jpg"),
- *  @OA\Property(property="mobile", type="string", example="updated_mobile.jpg"), 
- *  @OA\Property(property="desktop", type="string", example="updated_desktop.jpg"), 
- * @OA\Property(property="tablet", type="string", example="updated_tablet.jpg") * ) * ), * @OA\Response( * response=200, * description="Product updated successfully",
- *  @OA\JsonContent( * @OA\Property(property="status", type="integer", example=200), 
- * @OA\Property(property="results", type="object", example="Updated Successfully") * ) * ), * @OA\Response( * response=422, * description="Validation error",
- *  @OA\JsonContent(
- *  @OA\Property(property="status", type="integer", example=422),
- *  @OA\Property(property="errors", type="object") * ) * ),
- *  @OA\Response( * response=404, * description="Product not found",
- *  @OA\JsonContent( * @OA\Property(property="status", type="integer", example=404),
- *  @OA\Property(property="message", type="string", example="Product not found") * ) * ) * ) */
+    /** @OA\Put(
+     *      path="/products/{id}", 
+     *      operationId="updateProduct", 
+     *      tags={"products"}, 
+     *      summary="Update an existing product", 
+     *      @OA\Parameter( 
+     *          name="id", 
+     *          in="path", 
+     *          description="ID of the product to update", 
+     *          required=true, 
+     *              @OA\Schema(
+     *                  type="integer"
+     *              ) 
+     *          ), 
+     *      @OA\RequestBody( 
+     *          required=true,
+     *          @OA\JsonContent( 
+     *              @OA\Property(
+     *                  property="name", 
+     *                  type="string", 
+     *                  example="Updated Product Name"
+     *                  ), 
+     *              @OA\Property(
+     *                  property="price", 
+     *                  type="number", 
+     *                  format="float",
+     *                  example=39.99
+     *                  ),
+     *              @OA\Property(
+     *                  property="category", 
+     *                  type="string", 
+     *                  example="Updated Category Name"
+     *                  ), 
+     *              @OA\Property(
+     *                  property="thumbnail", 
+     *                  type="string", 
+     *                  example="updated_thumbnail.jpg"
+     *                  ),
+     *              @OA\Property(
+     *                  property="mobile", 
+     *                  type="string", 
+     *                  example="updated_mobile.jpg"
+     *                  ), 
+     *              @OA\Property(
+     *                  property="desktop", 
+     *                  type="string", 
+     *                  example="updated_desktop.jpg"
+     *                  ), 
+     *              @OA\Property(
+     *                  property="tablet", 
+     *                  type="string", 
+     *                  example="updated_tablet.jpg"
+     *                  ) 
+     *               ), 
+     *              ),
+     *      @OA\Response(
+     *          response=200, 
+     *          description="Product updated successfully",
+     *          @OA\JsonContent( 
+     *              @OA\Property(
+     *                  property="status", 
+     *                  type="integer", 
+     *                  example=200), 
+     *              @OA\Property(
+     *                  property="results", 
+     *                  type="object", 
+     *                  example="Updated Successfully"
+     *                  ) *
+     *               ) *
+     *           ),
+     *          @OA\Response( *
+     *              response=422, 
+     *              description="Validation error",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="status", 
+     *                      type="integer", 
+     *                      example=422),
+     *                  @OA\Property(
+     *                      property="errors", 
+     *                      type="object"
+     *                      ) 
+     *                  ) 
+     *                ),
+     *          @OA\Response( 
+     *              response=404, 
+     *              description="Product not found",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="status", 
+     *                      type="integer", 
+     *                      example=404),
+     *                  @OA\Property(
+     *                      property="message", 
+     *                      type="string", 
+     *                      example="Product not found"
+     *                      )
+     *                   ) 
+     *              ) 
+     *          ) */
     public function update(Request $request, Product $product)
     {
         //
@@ -311,7 +399,8 @@ class ProductController extends Controller
         $validateData = Validator::make($request->all(), [
             'name' => 'nullable|string',
             'price' => 'nullable|numeric',
-            'category' => 'nullable|numeric'
+            'category' => 'nullable|numeric',
+            'cartid' => 'nullable|numeric'
         ]);
 
         if ($validateData->fails()) {
@@ -322,6 +411,7 @@ class ProductController extends Controller
                     'name' => $request->name ?? $product->name,
                     'price' => $request->price ?? $product->price,
                     'category' => $request->category ?? $product->category,
+                    'cartid' => $request->cartid ?? $product->cartid,
                 ]);
 
                 return response()->json(new ProductResource($product), 200);
@@ -335,7 +425,56 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      */
 
-     /** * @OA\Delete( * path="/products/{id}", * operationId="deleteProduct", * tags={"products"}, * summary="Delete a product by its ID", * @OA\Parameter( * name="id", * in="path", * description="ID of the product to delete", * required=true, * @OA\Schema(type="integer") * ), * @OA\Response( * response=200, * description="Product deleted successfully", * @OA\JsonContent( * @OA\Property(property="status", type="boolean", example=true), * @OA\Property(property="message", type="string", example="Product deleted successfully") * ) * ), * @OA\Response( * response=404, * description="Product not found", * @OA\JsonContent( * @OA\Property(property="status", type="boolean", example=false), * @OA\Property(property="message", type="string", example="Product not found") * ) * ) * ) */
+    /** 
+     * @OA\Delete(
+     *      path="/products/{id}", 
+     *      operationId="deleteProduct", 
+     *      tags={"products"}, 
+     *      summary="Delete a product by its ID",   
+     *      @OA\Parameter( 
+     *          name="id", 
+     *          in="path", 
+     *          description="ID of the product to delete", 
+     *          required=true, 
+     *          @OA\Schema(
+     *              type="integer"
+     *           ) 
+     *      ),
+     *    @OA\Response( 
+     *      response=200, 
+     *      description="Product deleted successfully", 
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="status",
+     *                  type="boolean", 
+     *                  example=true
+     *                  ),  
+     *              @OA\Property(
+     *          property="message", 
+     *          type="string", 
+     *          example="Product deleted successfully"
+     *          )
+     *       ) 
+     *     ), 
+     *  @OA\Response( 
+     *      response=404, 
+     *      description="Product not found", 
+     *          @OA\JsonContent(
+     *               @OA\Property( 
+     *                  property="status", 
+     *                  type="boolean", 
+     *                  example=false
+     *                  ), 
+     *              @OA\Property(
+     *                  property="message", 
+     *                  type="string", 
+     *                  example="Product not found"
+     *                  )
+     *              )
+     *          )
+     *      ) 
+     * 
+     * */
 
     public function destroy(Product $product)
     {
